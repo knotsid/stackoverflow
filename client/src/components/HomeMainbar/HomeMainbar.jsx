@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const HomeMainbar = () => {
 	const location = useLocation();
-	const user = 1;
+	const user = null;
 	const navigate = useNavigate();
 
 	const questionsList = useSelector((state) => state.questionsReducer);
@@ -92,7 +92,6 @@ const HomeMainbar = () => {
 				) : (
 					<h1>All Questions</h1>
 				)}
-
 				<button onClick={checkAuth} className="ask-btn">
 					Ask Question
 				</button>

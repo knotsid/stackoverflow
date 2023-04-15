@@ -22,7 +22,7 @@ const AskQuestion = () => {
 					questionBody,
 					questionTags,
 					userPosted: User.result.name,
-					userId: User.result._id,
+					userId: User?.result?._id,
 				},
 				navigate
 			)
@@ -39,7 +39,6 @@ const AskQuestion = () => {
 		<div className="ask-question">
 			<div className="ask-ques-container">
 				<h1>Ask a public question</h1>
-				{/* <h1>{questionBody}</h1> */}
 				<form onSubmit={handleSubmit}>
 					<div className="ask-form-container">
 						<label htmlFor="ask-ques-title">

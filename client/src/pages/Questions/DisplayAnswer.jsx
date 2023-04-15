@@ -29,7 +29,7 @@ const DisplayAnswer = ({ question, handleShare }) => {
 							>
 								Share
 							</button>
-							{User.result._id === ans.userId && (
+							{User?.result._id === ans.userId && (
 								<button
 									type="button"
 									className="edit-question-btn"

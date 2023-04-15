@@ -7,7 +7,7 @@ const DisplayQuestion = () => {
 		<div className="home-container-1">
 			<LeftSidebar />
 			<div className="home-container-2">
-                    <QuestionsDetails />
+				<QuestionsDetails />
 				<RightSidebar />
 			</div>
 		</div>

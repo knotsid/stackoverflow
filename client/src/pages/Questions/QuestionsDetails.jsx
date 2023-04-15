@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import moment from "moment";
 import copy from "copy-to-clipboard";
 
@@ -17,22 +17,21 @@ import {
 
 const QuestionsDetails = () => {
 	const { id } = useParams();
-	const questionsList = useSelector((state) => state.questionsReducer);
 	const [Answer, setAnswer] = useState("");
+	const questionsList = useSelector((state) => state.questionsReducer);
 	const User = useSelector((state) => state.currentUserReducer);
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
 	const location = useLocation();
-	const url = "https://not-stackoverflow.netlify.app";
+	const dispatch = useDispatch();
 
 	const handlePostAnswer = (e, answerLength) => {
 		e.preventDefault();
 		if (User === null) {
-			alert("Login or Signup to answer a question");
+			alert("Login or signup to answer a question!!");
 			navigate("/Auth");
 		} else {
 			if (Answer === "") {
-				alert("Enter your answer before submitting");
+				alert("Enter an answer before submitting!!");
 			} else {
 				dispatch(
 					postAnswer({
@@ -48,8 +47,11 @@ const QuestionsDetails = () => {
 	};
 
 	const handleShare = () => {
+		const url = "http://localhost:3000";
 		copy(url + location.pathname);
-		alert("Copied url to clipboard");
+		alert(
+			"Url copied!!\nUse this to share the page.\n" + url + location.pathname
+		);
 	};
 
 	const handleDelete = () => {
@@ -177,7 +179,8 @@ const QuestionsDetails = () => {
 													>
 														Share
 													</button>
-													{User.result._id === question.userId && (
+													{User?.result?._id ===
+														question.userId && (
 														<button
 															type="button"
 															className="edit-question-btn"

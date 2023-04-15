@@ -23,7 +23,7 @@ const QuestionsDetails = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const location = useLocation();
-	const url = "http://localhost:3000";
+	const url = "https://not-stackoverflow.netlify.app";
 
 	const handlePostAnswer = (e, answerLength) => {
 		e.preventDefault();

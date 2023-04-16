@@ -1,16 +1,18 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import "./HomeMainbar.css";
-import QuestionList from "./QuestionList";
-import { useNavigate } from "react-router-dom";
-
+import React from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useSelector} from 'react-redux'
+import './HomeMainbar.css'
+import Questions from './Questions'
+import QuestionList from './QuestionList'
+    
 const HomeMainbar = () => {
-	const location = useLocation();
-	const user = null;
-	const navigate = useNavigate();
 
-	const questionsList = useSelector((state) => state.questionsReducer);
+  const user = 12;  
+  const navigate = useNavigate() 
+  const location = useLocation()
+
+  const questionsList = useSelector(state => state.questionsReducer)
+  
 
 	// const questionsList = [
 	// 	{
@@ -77,7 +79,7 @@ const HomeMainbar = () => {
 
 	const checkAuth = () => {
 		if (user === null) {
-			alert("login or signup to ask a question");
+			alert("Login or Signup to Ask a Question");
 			navigate("/Auth");
 		} else {
 			navigate("/AskQuestion");

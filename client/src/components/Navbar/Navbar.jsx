@@ -19,7 +19,6 @@ const Navbar = () => {
 		dispatch({ type: "LOGOUT" });
 		navigate("/");
 		dispatch(setCurrentUser(null));
-		// setProfileDropdown(!profileDropdown);
 	};
 
 	useEffect(() => {

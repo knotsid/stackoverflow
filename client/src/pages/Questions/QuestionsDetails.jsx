@@ -47,7 +47,8 @@ const QuestionsDetails = () => {
 	};
 
 	const handleShare = () => {
-		const url = "http://localhost:3000";
+		const url = "https://not-stackoverflow.netlify.app";
+		// const url = "http://localhost:3000";
 		copy(url + location.pathname);
 		alert(
 			"Url copied!!\nUse this to share the page.\n" + url + location.pathname

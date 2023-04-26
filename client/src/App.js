@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchAllQuestions } from './actions/question';
 import { fetchAllUsers } from './actions/users';
+import { Toaster } from 'react-hot-toast';
+import Chatbot from "./components/Chatbot/Chatbot";
 
 function App() {
 

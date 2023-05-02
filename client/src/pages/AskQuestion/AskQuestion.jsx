@@ -3,8 +3,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { askQuestion } from "../../actions/question";
+import toast from "react-hot-toast";
 
 import "./AskQuestion.css";
+import Editor from "../../components/Editor/Editor";
 
 const AskQuestion = () => {
 	const [questionTitle, setQuestionTitle] = useState("");
@@ -17,25 +19,23 @@ const AskQuestion = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log({ questionTitle, questionBody, questionTags });
-		dispatch(
-			askQuestion(
-				{
-					questionTitle,
-					questionBody,
-					questionTags,
-					userPosted: User?.result?.name,
-					userId: User?.result?._id,
-				},
-				navigate
-			)
-		);
-	};
-
-	const handleEnter = (e) => {
-		if (e.key === "Enter") {
-			setQuestionBody(questionBody + "\n");
-		}
+		if (User) {
+			if (questionTitle && questionBody && questionTags) {
+				dispatch(
+					askQuestion(
+						{
+							questionTitle,
+							questionBody,
+							questionTags,
+							userPosted: User.result.name,
+							userId: User?.result._id,
+						},
+						navigate
+					)
+				);
+				toast.success("Question posted successfully");
+			} else toast.error("Please enter value in all the fields");
+		} else toast.error("Please Login to ask question");
 	};
 
 	return (
@@ -65,16 +65,7 @@ const AskQuestion = () => {
 								Include all the information someone would need to answer
 								your question
 							</p>
-							<textarea
-								name=""
-								onChange={(e) => {
-									setQuestionBody(e.target.value);
-								}}
-								id="ask-ques-body"
-								cols="30"
-								rows="10"
-								onKeyPress={handleEnter}
-							></textarea>
+							<Editor value={questionBody} onChange={setQuestionBody} />
 						</label>
 						<label htmlFor="ask-ques-tags">
 							<h4>Tags</h4>

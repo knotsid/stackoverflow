@@ -4,6 +4,8 @@ import Avatar from "../../components/Avatar/Avatar";
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteAnswer } from "../../actions/question";
+import toast from "react-hot-toast";
+import HTMLReactParser from "html-react-parser";
 
 const DisplayAnswer = ({ question, handleShare }) => {
 	const User = useSelector((state) => state.currentUserReducer);
@@ -13,13 +15,14 @@ const DisplayAnswer = ({ question, handleShare }) => {
 
 	const handleDelete = (answerId, noOfAnswers) => {
 		dispatch(deleteAnswer(id, answerId, noOfAnswers - 1));
+		toast.success("Answer deleted");
 	};
 
 	return (
 		<div>
 			{question.answer.map((ans) => (
 				<div className="display-ans" key={ans._id}>
-					<p>{ans.answerBody}</p>
+					<p>{HTMLReactParser(ans.answerBody)}</p>
 					<div className="question-action-user">
 						<div>
 							<button

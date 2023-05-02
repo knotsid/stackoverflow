@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import moment from "moment";
 import copy from "copy-to-clipboard";
+import toast from "react-hot-toast";
+import HTMLReactParser from "html-react-parser";
 
 import upvote from "../../assets/upvote.svg";
 import downvote from "../../assets/downvote.svg";
@@ -14,6 +16,8 @@ import {
 	deleteQuestion,
 	voteQuestion,
 } from "../../actions/question.js";
+import Editor from "../../components/Editor/Editor";
+import Loader from "../../components/Loader/Loader";
 
 const QuestionsDetails = () => {
 	const { id } = useParams();
@@ -23,15 +27,16 @@ const QuestionsDetails = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const dispatch = useDispatch();
+	const url = "https://not-stackoverflow.netlify.app";
 
 	const handlePostAnswer = (e, answerLength) => {
 		e.preventDefault();
-		if (User === null) {
-			alert("Login or signup to answer a question!!");
+		if (!User) {
+			toast.error("Please Login or Signup to answer a question");
 			navigate("/Auth");
 		} else {
 			if (Answer === "") {
-				alert("Enter an answer before submitting!!");
+				toast.error("Enter an answer before submitting");
 			} else {
 				dispatch(
 					postAnswer({
@@ -42,29 +47,35 @@ const QuestionsDetails = () => {
 						userId: User.result._id,
 					})
 				);
+				setAnswer("");
 			}
 		}
 	};
-
 	const handleShare = () => {
-		const url = "https://not-stackoverflow.netlify.app";
 		// const url = "http://localhost:3000";
 		copy(url + location.pathname);
-		alert(
-			"Url copied!!\nUse this to share the page.\n" + url + location.pathname
-		);
+		toast.success("URL copied to clipboard");
 	};
 
 	const handleDelete = () => {
 		dispatch(deleteQuestion(id, navigate));
+		toast.success("Question deleted");
 	};
 
 	const handleUpVote = () => {
+		if (!User) {
+			return toast.error("Please Login or Signup to upvote");
+		}
 		dispatch(voteQuestion(id, "upVote", User.result._id));
+		toast.success("Upvoted");
 	};
 
 	const handleDownVote = () => {
+		if (!User) {
+			return toast.error("Please Login or Signup to downvote");
+		}
 		dispatch(voteQuestion(id, "downVote", User.result._id));
+		toast.success("Downvoted");
 	};
 	// const questionsList = [
 	// 	{
@@ -132,7 +143,7 @@ const QuestionsDetails = () => {
 	return (
 		<div className="question-details-page">
 			{questionsList.data === null ? (
-				<h1>Loading...</h1>
+				<Loader />
 			) : (
 				<>
 					{questionsList.data
@@ -164,7 +175,7 @@ const QuestionsDetails = () => {
 										</div>
 										<div style={{ width: "100%" }}>
 											<p className="question-body">
-												{question.questionBody}
+												{HTMLReactParser(question.questionBody)}
 											</p>
 											<div className="question-details-tags">
 												{question.questionTags.map((tag) => (
@@ -235,15 +246,9 @@ const QuestionsDetails = () => {
 											handlePostAnswer(e, question.answer.length);
 										}}
 									>
-										<textarea
-											name=""
-											id=""
-											cols="30"
-											rows="10"
-											onChange={(e) => {
-												setAnswer(e.target.value);
-											}}
-										></textarea>
+										<div>
+											<Editor value={Answer} onChange={setAnswer} />
+										</div>
 										<br />
 										<input
 											type="submit"

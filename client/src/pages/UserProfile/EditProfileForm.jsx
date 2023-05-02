@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateProfile } from "../../actions/users";
+import toast from "react-hot-toast";
+import Editor from "../../components/Editor/Editor";
 
 const EditProfileForm = ({ currentUser, setSwitch }) => {
 	const [name, setName] = useState(currentUser?.result?.name);
@@ -10,16 +12,13 @@ const EditProfileForm = ({ currentUser, setSwitch }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (tags.length === 0) {
-			dispatch(
-				updateProfile(currentUser.result._id, {
-					name,
-					about,
-					tags: currentUser.result.tags,
-				})
-			);
+		if (tags[0] === "" || tags.length === 0) {
+			toast.error("Update tags field");
 		} else {
-			dispatch(updateProfile(currentUser.result._id, { name, about, tags }));
+			dispatch(
+				updateProfile(currentUser?.result?._id, { name, about, tags })
+			);
+			toast.success("Profile updated");
 		}
 		setSwitch(false);
 	};
@@ -39,13 +38,7 @@ const EditProfileForm = ({ currentUser, setSwitch }) => {
 				</label>
 				<label htmlFor="about">
 					<h3>About me</h3>
-					<textarea
-						id=""
-						cols="30"
-						rows="10"
-						value={about}
-						onChange={(e) => setAbout(e.target.value)}
-					></textarea>
+					<Editor value={about} onChange={setAbout} />
 				</label>
 				<label htmlFor="tags">
 					<h3>Watched tags</h3>

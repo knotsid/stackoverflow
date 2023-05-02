@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import icon from "../../assets/icon.png";
 import AboutAuth from "./AboutAuth";
 import { signup, login } from "../../actions/auth";
@@ -18,20 +19,28 @@ const Auth = () => {
 
 	const handleSwitch = () => {
 		setIsSignup(!isSignup);
+		setName("");
+		setEmail("");
+		setPassword("");
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (!email && !password) {
-			alert("Enter email and password to continue...");
+			return toast.error("Please enter email and password");
 		}
 		if (isSignup) {
 			if (!name) {
-				alert("Enter a name to continue...");
+				return toast.error("Please enter name");
 			}
 			dispatch(signup({ name, email, password }, navigate));
+			toast.success("Redirecting...");
+			toast.success("User registered successfully");
+			toast.success("Logged in successfully");
 		} else {
 			dispatch(login({ email, password }, navigate));
+			toast.success("Redirecting...");
+			toast.success("Logged in successfully");
 		}
 	};
 

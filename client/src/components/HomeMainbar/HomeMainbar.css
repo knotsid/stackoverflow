@@ -1,14 +1,14 @@
 .main-bar {
+     width: calc(100% - 300px - 24px);
      float: left;
-     width: calc(100% - 324px);
-     margin: 25px 0;
+     margin: 25px 0px;
      padding: 0;
 }
 
 .main-bar-header {
      display: flex;
-     align-items: center;
      justify-content: space-between;
+     align-items: center;
 }
 
 .main-bar-header h1 {
@@ -30,17 +30,16 @@
 }
 
 .display-question-container {
-     display: flex;
-     align-items: center;
      min-height: 80px;
      width: 100%;
+     display: flex;
+     align-items: center;
      background-color: #fdf7e2;
-     border: 1px solid #edeff0;
-     border-bottom: 1px solid lightgrey;
+     border-bottom: solid 1px #edeff0;
 }
 
 .display-question-container .display-votes-ans {
-     padding: 20px;
+     padding: 10px;
 }
 
 .display-question-container .display-votes-ans p {
@@ -50,25 +49,23 @@
 
 .display-question-details {
      flex-grow: 1;
-     padding: 0 20px;
-}
-
-.display-question-details p {
-     padding: 4px;
-     margin: 0;
+     padding: 10px;
+     margin: 0%;
 }
 
 .question-title-link {
      text-decoration: none;
      color: #037ecb;
-     font-size: 14px;
-     font-weight: bold;
      transition: 0.3s;
 }
 
 .question-title-link:hover {
      color: #009dff;
-     text-decoration: underline;
+}
+
+.display-tags-time .display-tags {
+     display: flex;
+     flex-wrap: wrap;
 }
 
 .display-tags-time {
@@ -78,26 +75,26 @@
      justify-content: space-between;
 }
 
-.display-tags-time .display-tags {
-     display: flex;
-     flex-wrap: wrap;
-}
-
 .display-tags-time .display-tags p {
      margin: 2px;
      padding: 4px;
      font-size: 13px;
      background-color: #edeff0;
      color: #39739d;
-     border-radius: 4px;
-     border: 1px solid #39739d85;
 }
 
 .display-tags-time .display-time {
      font-size: 13px;
 }
 
-.display-tags-time .display-time span {
-     font-weight: bold;
-     text-decoration: none;
+@media screen and (max-width: 1020px) {
+     .main-bar {
+          width: 100%;
+     }
+}
+
+@media screen and (max-width: 740px) {
+     .display-question-container .display-votes-ans {
+          padding: 10px;
+     }
 }

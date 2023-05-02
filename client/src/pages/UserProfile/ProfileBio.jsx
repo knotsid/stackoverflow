@@ -1,4 +1,6 @@
 import React from "react";
+import HTMLReactParser from "html-react-parser";
+import { Link } from "react-router-dom";
 
 const ProfileBio = ({ currentProfile }) => {
 	return (
@@ -7,9 +9,13 @@ const ProfileBio = ({ currentProfile }) => {
 				{currentProfile?.tags.length !== 0 ? (
 					<>
 						<h4>Tags watched</h4>
-						{currentProfile?.tags.map((tag) => (
-							<p key={tag}>{tag}</p>
-						))}
+						<div className="user-tags-container">
+							{currentProfile?.tags.map((tag) => (
+								<Link key={tag} className="user-tags-link" to={"/Tags"}>
+									<p>{tag}</p>
+								</Link>
+							))}
+						</div>
 					</>
 				) : (
 					<p>0 Tags watched</p>
@@ -19,7 +25,7 @@ const ProfileBio = ({ currentProfile }) => {
 				{currentProfile?.about ? (
 					<>
 						<h4>About</h4>
-						<p>{currentProfile?.about}</p>
+						<p>{HTMLReactParser(currentProfile?.about)}</p>
 					</>
 				) : (
 					<p>No bio found</p>

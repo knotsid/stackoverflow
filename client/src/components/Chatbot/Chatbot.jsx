@@ -20,16 +20,19 @@ const Chatbot = ({ setIsOpen, isVerified, setIsVerified }) => {
 		setChatLog(chatLogNew);
 		const messages = chatLogNew.map((message) => message.message).join("\n");
 		try {
-			// const response = await fetch('https://stackoverflow-backend-q507.onrender.com/chatbot/', {
-			const response = await fetch("http://localhost:5000/chatbot/", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					message: messages,
-				}),
-			});
+			const response = await fetch(
+				"https://stackoverflow-backend-q507.onrender.com/chatbot/",
+				{
+					// const response = await fetch("http://localhost:5000/chatbot/", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						message: messages,
+					}),
+				}
+			);
 			const data = await response.json();
 			setChatLog([
 				...chatLogNew,
@@ -48,20 +51,23 @@ const Chatbot = ({ setIsOpen, isVerified, setIsVerified }) => {
 
 	const handleEmailSubmit = async (e) => {
 		e.preventDefault();
-		// const response = await fetch('https://stackoverflow-backend-q507.onrender.com/otp/sendOTP', {
-		const response = await fetch("http://localhost:5000/otp/sendOTP", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				email: email,
-				subject: "Email Verification OTP",
-				message:
-					"Hi, As you are trying to verify, here is the OTP that you need to enter to verify your email address. If you didn't make this request, please ignore this email.",
-				duration: 1,
-			}),
-		});
+		const response = await fetch(
+			"https://stackoverflow-backend-q507.onrender.com/otp/sendOTP",
+			{
+				// const response = await fetch("http://localhost:5000/otp/sendOTP", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					email: email,
+					subject: "Email Verification OTP",
+					message:
+						"Hi, As you are trying to verify, here is the OTP that you need to enter to verify your email address. If you didn't make this request, please ignore this email.",
+					duration: 1,
+				}),
+			}
+		);
 		const data = await response.json();
 		if (data.otp) {
 			setSentEmail(true);
@@ -73,17 +79,20 @@ const Chatbot = ({ setIsOpen, isVerified, setIsVerified }) => {
 
 	const handleOTPSubmit = async (e) => {
 		e.preventDefault();
-		// const response = await fetch('https://stackoverflow-backend-q507.onrender.com/otp/verifyOTP', {
-		const response = await fetch("http://localhost:5000/otp/verifyOTP", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				email: email,
-				otp: otp,
-			}),
-		});
+		const response = await fetch(
+			"https://stackoverflow-backend-q507.onrender.com/otp/verifyOTP",
+			{
+				// const response = await fetch("http://localhost:5000/otp/verifyOTP", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					email: email,
+					otp: otp,
+				}),
+			}
+		);
 		const data = await response.json();
 		if (data.valid) {
 			toast.success("Successfully verified");
